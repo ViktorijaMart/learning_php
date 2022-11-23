@@ -1,0 +1,37 @@
+[
+    {
+        "type": "passenger car",
+        "name": "Honda Civic",
+        "weight": 1550
+    },
+    {
+        "type": "airplane",
+        "name": "Boeing 737",
+        "weight": 41410
+    },
+    {
+        "type": "airplane",
+        "name": "Cessna DC-6",
+        "weight": 1300
+    },
+    {
+        "type": "truck",
+        "name": "Volvo FH16",
+        "weight": 12500
+    },
+    {
+        "type": "truck",
+        "name": "MB Actros",
+        "weight": 13000
+    },
+    {
+        "type": "passenger car",
+        "name": "VW Golf",
+        "weight": 1450
+    },
+    {
+        "type": "plane",
+        "name": "Airbus A320",
+        "weight": 39500
+    }
+]

@@ -1,0 +1,23 @@
+{
+    "1": {
+        "name": "dog.jpg",
+        "uniqueName": "637631316beee_dog.jpg",
+        "size": 54509,
+        "path": ".\/data\/637631316beee_dog.jpg",
+        "uploadDate": "2022-11-17 14:03:45"
+    },
+    "2": {
+        "name": "mouse.jpg",
+        "uniqueName": "63763138a06a0_mouse.jpg",
+        "size": 8679,
+        "path": ".\/data\/63763138a06a0_mouse.jpg",
+        "uploadDate": "2022-11-17 14:03:52"
+    },
+    "3": {
+        "name": "Cat.jpg",
+        "uniqueName": "6376721dba5ae_Cat.jpg",
+        "size": 6107,
+        "path": ".\/data\/6376721dba5ae_Cat.jpg",
+        "uploadDate": "2022-11-17 18:40:45"
+    }
+}
