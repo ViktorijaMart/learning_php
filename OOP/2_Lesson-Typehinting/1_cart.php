@@ -78,6 +78,7 @@ class Customer
 class CartItem
 {
     private string $name;
+    private int $price;
 
     public function __construct(string $name, int $price)
     {
@@ -94,7 +95,6 @@ class CartItem
     {
         return $this->price;
     }
-    private int $price;
 }
 
 class CartDiscount
