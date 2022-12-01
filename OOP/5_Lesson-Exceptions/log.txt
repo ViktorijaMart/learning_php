@@ -2,3 +2,5 @@
 2022-11-30 20:02:59 Product "45" is not in the inventory
 2022-11-30 20:03:09 product "4" only has 2 items in the inventory
 2022-12-01 10:32:19 product "4" only has 2 items in the inventory
+2022-12-01 17:36:44 product "5" only has 0 items in the inventory
+2022-12-01 17:37:09 product "5" only has 0 items in the inventory

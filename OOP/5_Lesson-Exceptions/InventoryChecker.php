@@ -6,23 +6,28 @@ class InputValidationException extends Exception {};
 
 class InventoryChecker
 {
-    public function checker(string $products): void
+    private const INVENTORY_FILE_PATH = './inventory.json';
+    private const LOG_FILE_PATH = './log.txt';
+    private const PRODUCT_ID_POSITION = 0;
+    private const PRODUCT_QUANTITY_POSITION = 1;
+
+    public function checkInventory(string $products): void
     {
         $checkId = $this->checkId($products);
         $checkQuantity = $this->checkQuantity($products);
         $now = date('Y-m-d H:i:s');
 
        if(!empty($checkId)) {
-           file_put_contents('./log.txt', $now . ' ' . $checkId . "\n", FILE_APPEND);
+           file_put_contents(self::LOG_FILE_PATH, $now . ' ' . $checkId . "\n", FILE_APPEND);
            throw new InventoryException($checkId);
        }
 
         if(!empty($checkQuantity)) {
-            file_put_contents('./log.txt', $now . ' ' . $checkQuantity . "\n", FILE_APPEND);
+            file_put_contents(self::LOG_FILE_PATH, $now . ' ' . $checkQuantity . "\n", FILE_APPEND);
             throw new InventoryException($checkQuantity);
         }
 
-        echo 'Success';
+        echo 'all products have the requested quantity in stock';
     }
 
     public function checkId(string $products): string
@@ -38,7 +43,7 @@ class InventoryChecker
         }
 
         foreach ($productsArray as $product) {
-            $productsIds[] = $product[0];
+            $productsIds[] = $product[self::PRODUCT_ID_POSITION];
         }
 
         foreach ($productsIds as $productsId) {
@@ -58,7 +63,11 @@ class InventoryChecker
 
         foreach ($inventory as $item) {
             foreach ($productsArray as $product) {
-                if ($item['product_id'] == $product[0] && $item['quantity'] < $product[1]) {
+                if (
+                    $item['product_id'] == $product[self::PRODUCT_ID_POSITION]
+                    &&
+                    $item['quantity'] < $product[self::PRODUCT_QUANTITY_POSITION]
+                ) {
                     $errorMessage .= 'product "' . $item['product_id'] . '" only has ' . $item['quantity'] . ' items in the inventory';
                 }
             }
@@ -69,7 +78,7 @@ class InventoryChecker
 
     private function getInventory(): array
     {
-        return json_decode(file_get_contents('./inventory.json'), true);
+        return json_decode(file_get_contents(self::INVENTORY_FILE_PATH), true);
     }
 
     private function explodeProducts(string $products): array
@@ -87,13 +96,11 @@ class InventoryChecker
 
 try {
     $inputValidator = new InputValidator();
-    $inputValidator->validator("3,2:2,5:1");
+    $inputValidator->validator("3z:4,2:2,4:1");
     $inventoryChecker = new InventoryChecker();
-    $inventoryChecker->checker("3,2:2,5:1");
-} catch (InputValidationException $inputException) {
-    echo $inputException->getMessage();
-} catch (InventoryException $inventoryException) {
-    echo $inventoryException->getMessage();
+    $inventoryChecker->checkInventory("3:4,2:2,4:1");
+} catch (Exception $exception) {
+    echo $exception->getMessage();
 }
 
 
@@ -131,8 +138,6 @@ class InputValidator
                 throw new InputValidationException('Invalid input "' . $input . '". Format: id:quantity,id:quantity');
             }
         }
-
-        echo 'Good input';
     }
 }
 
