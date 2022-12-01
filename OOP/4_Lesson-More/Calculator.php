@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
 
-class Calculator {
+class Calculator
+{
 
     private function sum(int $a, int $b): int
     {
