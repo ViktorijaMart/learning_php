@@ -17,29 +17,29 @@ būti atsakingas autoloaderis
 - Panaudokite "use" statementus, kad nereiktų rašyti pilnai kvalifikuotų klasių pavadinimų (FQCN)
 */
 
-spl_autoload_register(function ($className) {
-    if ($className === 'Inventory_Checker\App') {
-        require 'src/App.php';
-    }
+//spl_autoload_register(function ($className) {
+//    if ($className === 'Inventory_Checker\App') {
+//        require 'src/App.php';
+//    }
+//
+//    if ($className === 'Inventory_Checker\Validator\InputValidator') {
+//        require 'src/Validator/InputValidator.php';
+//    }
+//
+//    if ($className === 'Inventory_Checker\Service\InventoryService') {
+//        require 'src/Service/InventoryService.php';
+//    }
+//
+//    if ($className === 'Inventory_Checker\Exception\InventoryException') {
+//        require 'src/Exception/InventoryException.php';
+//    }
+//
+//    if ($className === 'Inventory_Checker\Exception\InputValidationException') {
+//        require 'src/Exception/InputValidationException.php';
+//    }
+//});
 
-    if ($className === 'Inventory_Checker\Validator\InputValidator') {
-        require 'src/Validator/InputValidator.php';
-    }
+require_once './vendor/autoload.php';
 
-    if ($className === 'Inventory_Checker\Service\InventoryService') {
-        require 'src/Service/InventoryService.php';
-    }
-
-    if ($className === 'Inventory_Checker\Exception\InventoryException') {
-        require 'src/Exception/InventoryException.php';
-    }
-
-    if ($className === 'Inventory_Checker\Exception\InputValidationException') {
-        require 'src/Exception/InputValidationException.php';
-    }
-});
-
-use Inventory_Checker\App;
-
-$appObj = new App();
+$appObj = new Inventory_Checker\App();
 $appObj->execute();

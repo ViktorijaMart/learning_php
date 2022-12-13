@@ -1,0 +1,17 @@
+{
+    "name": "viktorija_martinaityte/inventory_checker",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Inventory_Checker\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Viktorija Martinaityte"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^3.2"
+    }
+}

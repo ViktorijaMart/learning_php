@@ -1,9 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Inventory_Checker\Service;
 
 use Inventory_Checker\Exception\InventoryException;
+use Monolog\Level;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class InventoryService
 {
@@ -17,14 +21,18 @@ class InventoryService
         $checkId = $this->checkId($products);
         $checkQuantity = $this->checkQuantity($products);
         $now = date('Y-m-d H:i:s');
+        $log = new Logger('inventory error');
+        $log->pushHandler(new StreamHandler(self::LOG_FILE_PATH, Level::Error));
 
-        if(!empty($checkId)) {
-            file_put_contents(self::LOG_FILE_PATH, $now . ' ' . $checkId . "\n", FILE_APPEND);
+        if (!empty($checkId)) {
+//            file_put_contents(self::LOG_FILE_PATH, $now . ' ' . $checkId . "\n", FILE_APPEND);
+            $log->error($checkId);
             throw new InventoryException($checkId);
         }
 
-        if(!empty($checkQuantity)) {
-            file_put_contents(self::LOG_FILE_PATH, $now . ' ' . $checkQuantity . "\n", FILE_APPEND);
+        if (!empty($checkQuantity)) {
+//            file_put_contents(self::LOG_FILE_PATH, $now . ' ' . $checkQuantity . "\n", FILE_APPEND);
+            $log->error($checkQuantity);
             throw new InventoryException($checkQuantity);
         }
 

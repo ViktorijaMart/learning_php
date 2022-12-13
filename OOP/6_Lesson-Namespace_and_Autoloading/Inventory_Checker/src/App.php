@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Inventory_Checker;
@@ -14,12 +15,11 @@ class App
     {
         try {
             $inputValidator = new InputValidator();
-            $inputValidator->validator("3z:4,2:2,4:1");
+            $inputValidator->validator("3:24,2:2,4:1");
             $inventoryChecker = new InventoryService();
-            $inventoryChecker->checkInventory("3z:4,2:2,4:1");
+            $inventoryChecker->checkInventory("3:24,2:2,4:1");
         } catch (InventoryException | InputValidationException $exception) {
             echo $exception->getMessage();
         }
     }
 }
-

@@ -1,3 +1,4 @@
 2022-12-01 20:31:13 Product "35" is not in the inventory
 2022-12-05 17:16:19 Product "35" is not in the inventory
 2022-12-05 17:17:06 Product "35" is not in the inventory
+[2022-12-13T18:10:54.341122+01:00] inventory error.ERROR: product "3" only has 6 items in the inventory [] []
