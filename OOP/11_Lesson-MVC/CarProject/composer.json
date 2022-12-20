@@ -1,0 +1,16 @@
+{
+    "name": "vikto/car_project",
+    "description": "mvc project example",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Vikto\\CarProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Viktorija Martinaityte"
+        }
+    ],
+    "require": {}
+}

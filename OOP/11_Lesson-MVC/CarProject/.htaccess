@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteBase /Paskaitos/OOP/11_Lesson-MVC/CarProject/
+RewriteRule ^index\.php＄ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /Paskaitos/OOP/11_Lesson-MVC/CarProject/index.php [L]
