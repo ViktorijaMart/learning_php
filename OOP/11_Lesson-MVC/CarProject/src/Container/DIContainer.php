@@ -2,67 +2,110 @@
 
 namespace Vikto\CarProject\Container;
 
-use RuntimeException;
-use Vikto\CarProject\Controllers\CarController;
-use Vikto\CarProject\Framework\Router;
-use Vikto\CarProject\Repositories\CarRepository;
-use Vikto\CarProject\Controllers\HomePageController;
+// https://gist.github.com/MustafaMagdi/2bb27aebf6ab078b1f3e5635c0282fac
+
+use Exception, Closure, ReflectionClass;
 
 class DIContainer
 {
-    private array $entries = [];
+    /**
+     * @var array
+     */
+    protected array $instances = [];
 
-    public function get(string $id)
+    /**
+     * @param      $abstract
+     * @param null $concrete
+     */
+    public function set($abstract, $concrete = NULL)
     {
-        if (!$this->has($id)) {
-            throw new RuntimeException('Class ' . $id . 'not found in container.');
+        if ($concrete === NULL) {
+            $concrete = $abstract;
         }
-        $entry = $this->entries[$id];
-
-        return $entry($this);
+        $this->instances[$abstract] = $concrete;
     }
 
-    public function has(string $id): bool
+    /**
+     * @param       $abstract
+     * @param array $parameters
+     *
+     * @return object|null
+     * @throws Exception
+     */
+    public function get($abstract, array $parameters = [])
     {
-        return isset($this->entries[$id]);
+        // if we don't have it, just register it
+        if (!isset($this->instances[$abstract])) {
+            $this->set($abstract);
+        }
+
+        return $this->resolve($this->instances[$abstract], $parameters);
     }
 
-    public function set(string $id, callable $callable): void
+    /**
+     * resolve single
+     *
+     * @param $concrete
+     * @param $parameters
+     *
+     * @return mixed|object
+     * @throws Exception
+     */
+    public function resolve($concrete, $parameters)
     {
-        $this->entries[$id] = $callable;
+        if ($concrete instanceof Closure) {
+            return $concrete($this, $parameters);
+        }
+
+        $reflector = new ReflectionClass($concrete);
+        // check if class is instantiable
+        if (!$reflector->isInstantiable()) {
+            throw new Exception("Class $concrete is not instantiable");
+        }
+
+        // get class constructor
+        $constructor = $reflector->getConstructor();
+        if (is_null($constructor)) {
+            // get new instance from class
+            return $reflector->newInstance();
+        }
+
+        // get constructor params
+        $parameters   = $constructor->getParameters();
+        $dependencies = $this->getDependencies($parameters);
+
+        // get new instance with dependencies resolved
+        return $reflector->newInstanceArgs($dependencies);
     }
 
-    public function loadDependencies()
+    /**
+     * get all dependencies resolved
+     *
+     * @param $parameters
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function getDependencies($parameters): array
     {
-        $this->set(
-            CarController::class,
-            function (DIContainer $container) {
-                return new CarController();
+        $dependencies = [];
+        foreach ($parameters as $parameter) {
+            // get the type hinted class
+            $dependency = $parameter->getClass();
+            if ($dependency === NULL) {
+                // check if default value for a parameter is available
+                if ($parameter->isDefaultValueAvailable()) {
+                    // get default value of parameter
+                    $dependencies[] = $parameter->getDefaultValue();
+                } else {
+                    throw new Exception("Can not resolve class dependency $parameter->name");
+                }
+            } else {
+                // get dependency resolved
+                $dependencies[] = $this->get($dependency->name);
             }
-        );
+        }
 
-        $this->set(
-            Router::class,
-            function (DIContainer $container) {
-                return new Router(
-                    $container->get(HomePageController::class),
-                    $container->get(CarController::class)
-                );
-            }
-        );
-
-        $this->set(
-            CarRepository::class,
-            function (DIContainer $container) {
-                return new CarRepository();
-            }
-        );
-
-        $this->set(
-            HomePageController::class,
-            function (DIContainer $container) {
-                return new HomePageController();
-            }
-        );
+        return $dependencies;
     }
 }

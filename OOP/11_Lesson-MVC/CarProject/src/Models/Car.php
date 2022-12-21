@@ -10,6 +10,26 @@ class Car
     private string $model;
     private int $year;
 
+    public function setRegistrationId(string $registrationId): void
+    {
+        $this->registrationId = $registrationId;
+    }
+
+    public function setManufacturer(string $manufacturer): void
+    {
+        $this->manufacturer = $manufacturer;
+    }
+
+    public function setModel(string $model): void
+    {
+        $this->model = $model;
+    }
+
+    public function setYear(int $year): void
+    {
+        $this->year = $year;
+    }
+
     public function getRegistrationId(): string
     {
         return $this->registrationId;

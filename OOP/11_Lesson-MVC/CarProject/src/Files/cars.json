@@ -1,0 +1,61 @@
+[
+  {
+    "registrationId": "MCZ811",
+    "manufacturer": "BMW",
+    "model": "330",
+    "year": 2007
+  },
+  {
+    "registrationId": "BGT523",
+    "manufacturer": "Renault",
+    "model": "Scenic",
+    "year": 2006
+  },
+  {
+    "registrationId": "VGT548",
+    "manufacturer": "Audi",
+    "model": "A3",
+    "year": 2005
+  },
+  {
+    "registrationId": "KLJ963",
+    "manufacturer": "Volkswagen",
+    "model": "Golf",
+    "year": 2017
+  },
+  {
+    "registrationId": "ZSR763",
+    "manufacturer": "BMW",
+    "model": "535",
+    "year": 2012
+  },
+  {
+    "registrationId": "PKL456",
+    "manufacturer": "Mercedes-Benz",
+    "model": "S500",
+    "year": 2014
+  },
+  {
+    "registrationId": "TRE789",
+    "manufacturer": "Nissan",
+    "model": "Qashqai",
+    "year": 2008
+  },
+  {
+    "registrationId": "GHT159",
+    "manufacturer": "Mini",
+    "model": "Cooper",
+    "year": 2009
+  },
+  {
+    "registrationId": "DVG246",
+    "manufacturer": "Citroen",
+    "model": "C5",
+    "year": 2009
+  },
+  {
+    "registrationId": "UJL426",
+    "manufacturer": "Volkswagen",
+    "model": "Transporter",
+    "year": 2011
+  }]

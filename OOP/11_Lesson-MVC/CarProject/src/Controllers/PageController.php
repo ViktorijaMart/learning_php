@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Vikto\CarProject\Controllers;
 
-class HomePageController
+class PageController
 {
-    public function renderHomePage(): string
+    public function renderHomePage(): void
     {
-        return '<h1>Welcome to our home page</h1>';
+        require __DIR__ . '/../../views/index.php';
     }
 
-    public function renderNotFoundPage(): string
+    public function renderNotFoundPage(): void
     {
-        return '<h1>Page not found</h1>';
+        require __DIR__ . '/../../views/error/error.php';
     }
 }

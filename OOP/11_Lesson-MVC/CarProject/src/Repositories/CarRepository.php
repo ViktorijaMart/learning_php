@@ -3,86 +3,62 @@ declare(strict_types=1);
 
 namespace Vikto\CarProject\Repositories;
 
+use Vikto\CarProject\Container\DIContainer;
+use Vikto\CarProject\Models\Car;
+
 class CarRepository
 {
-    private const CARS = [
-        [
-            'registrationId' => '1',
-            'manufacturer' => 'BMW',
-            'model' => '330',
-            'year' => 2007
-        ],
-        [
-            'registrationId' => '2',
-            'manufacturer' => 'Renault',
-            'model' => 'Scenic',
-            'year' => 2006
-        ],
-        [
-            'registrationId' => '3',
-            'manufacturer' => 'Audi',
-            'model' => 'A3',
-            'year' => 2005
-        ],
-        [
-            'registrationId' => '4',
-            'manufacturer' => 'Volkswagen',
-            'model' => 'Golf',
-            'year' => 2017
-        ],
-        [
-            'registrationId' => '5',
-            'manufacturer' => 'BMW',
-            'model' => '535',
-            'year' => 2012
-        ],
-        [
-            'registrationId' => '6',
-            'manufacturer' => 'Mercedes-Benz',
-            'model' => 'S500',
-            'year' => 2014
-        ],
-        [
-            'registrationId' => '7',
-            'manufacturer' => 'Nissan',
-            'model' => 'Qashqai',
-            'year' => 2008
-        ],
-        [
-            'registrationId' => '8',
-            'manufacturer' => 'Mini',
-            'model' => 'Cooper',
-            'year' => 2009
-        ],
-        [
-            'registrationId' => '9',
-            'manufacturer' => 'Citroen',
-            'model' => 'C5',
-            'year' => 2009
-        ],
-        [
-            'registrationId' => '10',
-            'manufacturer' => 'Volkswagen',
-            'model' => 'Transporter',
-            'year' => 2011
-        ]
-    ];
+    private const JSON_PATH = __DIR__ . '/../Files/cars.json';
 
-    public function getByRegistrationId(string $registrationId): array
+    public function __construct(private readonly DIContainer $container)
     {
-        $carWithGivenRegistrationId = [];
+    }
 
-        foreach (self::CARS as $car) {
-            if ($car['registrationId'] === $registrationId) {
-                $carWithGivenRegistrationId = $car;
+    public function getByRegistrationId(): Car
+    {
+        $carsArray = $this->decodeJSON();
+        $registrationId = "GHT159";
+
+        /* @var Car $carObj
+         */
+        foreach ($carsArray as $car) {
+            if ($car["registrationId"] === $registrationId) {
+                $carObj = $this->container->get('Vikto\CarProject\Models\Car');
+                $carObj->setRegistrationId($car["registrationId"]);
+                $carObj->setManufacturer($car['manufacturer']);
+                $carObj->setModel($car['model']);
+                $carObj->setYear($car['year']);
             }
         }
 
-        return $carWithGivenRegistrationId;
+        if (!isset($carObj)) {
+            throw new \Exception('There is no car with ' . $registrationId . ' registration ID');
+        }
+
+        return $carObj;
     }
 
     public function getAll(): array
     {
-        return self::CARS;
+        $carsArray = $this->decodeJSON();
+
+        $carsObjArray = [];
+
+        foreach ($carsArray as $car) {
+            $carObj = $this->container->get('Vikto\CarProject\Models\Car');
+            $carObj->setRegistrationId($car["registrationId"]);
+            $carObj->setManufacturer($car['manufacturer']);
+            $carObj->setModel($car['model']);
+            $carObj->setYear($car['year']);
+
+            $carsObjArray[] = $carObj;
+        }
+
+        return $carsObjArray;
+    }
+
+    public function decodeJSON(): array
+    {
+        return json_decode(file_get_contents(self::JSON_PATH), true);
     }
 }

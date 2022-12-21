@@ -3,32 +3,39 @@ declare(strict_types=1);
 
 namespace Vikto\CarProject\Framework;
 
+
+use Vikto\CarProject\Container\DIContainer;
 use Vikto\CarProject\Controllers\CarController;
-use Vikto\CarProject\Controllers\HomePageController;
+use Vikto\CarProject\Controllers\PageController;
 
 class Router
 {
-    public function __construct(
-        private HomePageController $homePageController,
-        private CarController $carController)
+    public function __construct(private readonly DIContainer $container)
     {}
 
     public function process(string $request)
     {
+        /* @var CarController $carController
+         * @var PageController $pageController
+         */
+
+        $carController = $this->container->get('Vikto\CarProject\Controllers\CarController');
+        $pageController = $this->container->get('Vikto\CarProject\Controllers\PageController');
+
         switch ($request) {
             case '':
             case '/':
-                echo $this->homePageController->renderHomePage();
+                $pageController->renderHomePage();
                 break;
             case '/car/list':
-                echo $this->carController->list();
+                $carController->list();
                 break;
             case '/car/details':
-                echo $this->carController->details();
+                $carController->details();
                 break;
             default:
                 http_response_code(404);
-                echo $this->homePageController->renderNotFoundPage();
+                echo $pageController->renderNotFoundPage();
                 break;
         }
     }
