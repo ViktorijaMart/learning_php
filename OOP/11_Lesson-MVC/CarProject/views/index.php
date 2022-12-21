@@ -16,7 +16,7 @@ declare(strict_types=1);
     h1 {
         margin-top: 40px;
         margin-left: 40px;
-        text-align: centergit;
+        text-align: center;
     }
 
     #main {
