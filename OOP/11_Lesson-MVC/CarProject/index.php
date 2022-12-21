@@ -4,13 +4,17 @@ declare(strict_types=1);
 require_once './vendor/autoload.php';
 
 use Vikto\CarProject\Container\DIContainer;
-use Vikto\CarProject\Framework\Router;
+
+$request = str_replace('/Paskaitos/OOP/11_Lesson-MVC/CarProject', '', $_SERVER['REQUEST_URI']);
 
 // Load custom DI container
 $container = new DIContainer();
-$container->loadDependencies();
 
 // Use custom Router
-$request = str_replace('/Paskaitos/OOP/11_Lesson-MVC/CarProject', '', $_SERVER['REQUEST_URI']);
-$router = $container->get(Router::class);
-$router->process($request);
+
+try {
+    $router = $container->get('Vikto\CarProject\Framework\Router');
+    $router->process($request);
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
