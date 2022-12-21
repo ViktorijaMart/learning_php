@@ -1,0 +1,3 @@
+1.1 Pakeiskite "inventory checker" + "Data Processor" klases, kad būtų naudojamas DI
+
+1.2 Panaudokite DI konteinerį (iš failo ./1_container.php) "inventory checker" + "Data Processor" aplikacijoje.
