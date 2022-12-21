@@ -41,5 +41,20 @@ būti atsakingas autoloaderis
 
 require_once './vendor/autoload.php';
 
-$appObj = new Inventory_Checker\App();
-$appObj->execute();
+use Inventory_Checker\Container\DIContainer;
+use Inventory_Checker\App;
+use Inventory_Checker\Service\InventoryService;
+use Inventory_Checker\Validator\InputValidator;
+
+//$appObj = new Inventory_Checker\App();
+//$appObj->execute();
+
+// Updating this task with DIContainer
+$container = new DIContainer();
+$container->loadDependencies();
+
+$app = new App(
+    $container->get(InputValidator::class),
+    $container->get(InventoryService::class)
+);
+$app->execute();

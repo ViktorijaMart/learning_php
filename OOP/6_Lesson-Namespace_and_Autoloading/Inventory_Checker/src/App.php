@@ -11,13 +11,23 @@ use Inventory_Checker\Exception\InputValidationException;
 
 class App
 {
+    // Adding DIContainer from 10th lesson
+    public function __construct(
+        private InputValidator $inputValidator,
+        private InventoryService $inventoryService
+    )
+    {
+    }
+
     public function execute(): void
     {
         try {
-            $inputValidator = new InputValidator();
-            $inputValidator->validator("3:24,2:2,4:1");
-            $inventoryChecker = new InventoryService();
-            $inventoryChecker->checkInventory("3:24,2:2,4:1");
+//            $inputValidator = new InputValidator();
+//            Adding DIContainer from 10th lesson
+            $this->inputValidator->validator("3:24,2:2,4:1");
+//            $inventoryChecker = new InventoryService();
+//            Adding DIContainer from 10th lesson
+            $this->inventoryService->checkInventory("3:24,2:2,4:1");
         } catch (InventoryException | InputValidationException $exception) {
             echo $exception->getMessage();
         }
