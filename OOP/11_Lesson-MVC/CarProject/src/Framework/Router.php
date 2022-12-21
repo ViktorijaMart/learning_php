@@ -31,12 +31,17 @@ class Router
                 $carController->list();
                 break;
             case '/car/details':
-                $carController->details();
+                $carController->details($this->getRegistrationId());
                 break;
             default:
                 http_response_code(404);
-                echo $pageController->renderNotFoundPage();
+                $pageController->renderNotFoundPage();
                 break;
         }
+    }
+
+    public function getRegistrationId(): string
+    {
+        return $_POST["registrationId"];
     }
 }

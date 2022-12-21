@@ -18,9 +18,9 @@ class CarController
         require __DIR__ . '/../../views/car/list.php';
     }
 
-    public function details(): void
+    public function details(string $registrationId): void
     {
-        $carObj = $this->container->get('Vikto\CarProject\Repositories\CarRepository')->getByRegistrationId();
+        $carObj = $this->container->get('Vikto\CarProject\Repositories\CarRepository')->getByRegistrationId($registrationId);
 
         require __DIR__ . '/../../views/car/details.php';
     }

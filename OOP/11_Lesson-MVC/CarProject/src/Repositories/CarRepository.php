@@ -14,10 +14,9 @@ class CarRepository
     {
     }
 
-    public function getByRegistrationId(): Car
+    public function getByRegistrationId(string $registrationId): Car
     {
         $carsArray = $this->decodeJSON();
-        $registrationId = "GHT159";
 
         /* @var Car $carObj
          */
