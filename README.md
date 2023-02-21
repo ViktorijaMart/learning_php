@@ -4,4 +4,4 @@ This is a repository where I keep PHP exercises I have done (mostly at CodeAcade
 
 This repository is mainly kept for myself and is not intended to showcase my skills in PHP.
 
-Although, feel free to explore this folder. It is mostly written in Lithuanian (names of topics and exercises).
+Although, feel free to explore this folder.
